@@ -42,7 +42,6 @@ class Shepherd{
 
 class Crook{
     constructor(x, y, world){
-        this.position = createVector(x, y);
         this.size = 50;
         const options = {
             friction: 0,
@@ -55,12 +54,11 @@ class Crook{
         let radius = 60;
         let x = playerX + radius * cos(theta);
         let y = playerY + radius * sin(theta);
-
-    this.position = {x: x, y: y};
+        this.position = {x: x, y: y};
     }
     draw = () => {
         const angle = this.body.angle;
-        this.body.position = {x: position.x, y: position.y};
+        this.body.position = this.position;
         push();
         translate(this.position.x, this.position.y);
         rotate(angle);
