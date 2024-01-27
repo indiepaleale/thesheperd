@@ -9,11 +9,6 @@ class Shepherd{
         this.position = createVector(x, y);
         this.speed = 5;
         this.size = 70;
-        // const options = {
-        //     friction: 0,
-        // };
-        // this.body = Bodies.rectangle(x, y, this.size, this.size, options);
-        // Composite.add(world, [this.body]);
         this.tool = new Crook(x + 100, y + 100, world);
     }
     getInput(){
@@ -35,9 +30,6 @@ class Shepherd{
         this.tool.updatePosition(this.position.x + 10, this.position.y)
     };
     draw = () => {
-        const position = this.position;
-        // const angle = this.body.angle;
-        // this.body.position = {x: position.x, y: position.y};
         push();
         translate(this.position.x, this.position.y);
         stroke(2);
