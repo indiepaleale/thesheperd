@@ -49,6 +49,9 @@ function setup() {
     canvasMouse.pixelRatio = pixelDensity();
     mConstraint = MouseConstraint.create(engine, options);
     World.add(world, mConstraint)
+
+    //add boundary
+    const boundaries = new Boundary(width,height);
 }
 
 function draw() {
