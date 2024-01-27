@@ -1,6 +1,7 @@
 //p5 canvas setup
 let cnv;
 let root;
+let player;
 //matter-js engine setup
 const {
   Engine,
@@ -32,7 +33,7 @@ function setup() {
   root.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   //CENTER mode is used with matter-js
   rectMode(CENTER)
-
+  player = new Shepherd(width/2, height/2, world);
   for (let i = 0; i < 100; i++) {
     const sheep = new Sheep(random(0, width), random(0, height), world);
     herd.push(sheep);
@@ -56,6 +57,7 @@ function draw() {
   
   for (let sheep of herd) {
     sheep.draw();
-  }
-  ;
+  };
+  player.update();
+  player.draw();
 }
