@@ -56,8 +56,9 @@ function draw() {
   background(220);
   
   for (let sheep of herd) {
-    sheep.draw();
+    sheep.run(herd);
   };
   player.update();
   player.draw();
+ 
 }
