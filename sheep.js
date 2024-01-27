@@ -2,7 +2,7 @@ class Sheep {
     constructor(x, y, world) {
         //matter-js
         const options = {
-            friction: 0,
+            friction: 1,
         };
 
         this.r = 20; // collision body radius
@@ -10,10 +10,6 @@ class Sheep {
         Composite.add(world, [this.body]);
         //autonomous
         this.position = createVector(this.body.position.x, this.body.position.y)
-        this.acceleration = createVector(0, 0);
-        this.velocity = createVector(random(-1, 1), random(-1, 1));
-        this.maxspeed = 3; // Maximum speed
-        this.maxforce = 0.05; // Maximum steering force
 
     }
 
@@ -21,16 +17,14 @@ class Sheep {
     run = (herd) => {
         const attraction = this.cohere(herd);
         attraction.mult(0.02);
-        this.body.force.x+=attraction.x;
-        this.body.force.y+=attraction.y;
-
-        //this.update();
+        Matter.Body.applyForce(this.body,this.body.position,{
+            x:attraction.x,
+            y:attraction.y,
+        })
         this.draw();
 
     }
-    applyForce = (force) => {
-        this.acceleration.add(force);
-    }
+
     cohere = (herd) => {
         let neighborDistance = 300;
         let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
@@ -58,9 +52,7 @@ class Sheep {
         // Normalize desired and scale to maximum speed
         desired.normalize();
         desired.mult(0.001);;
-        return desired;
-        // Steering = Desired minus Velocity
-        
+        return desired;        
     }
 
     draw = () => {
