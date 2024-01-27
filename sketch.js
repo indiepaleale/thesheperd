@@ -1,6 +1,3 @@
-Matter.use(
-  'matter-attractors' // PLUGIN_NAME
-);
 //p5 canvas setup
 let cnv;
 let root;

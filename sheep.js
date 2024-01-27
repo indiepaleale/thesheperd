@@ -19,11 +19,12 @@ class Sheep {
 
 
     run = (herd) => {
-        [this.position.x, this.position.y] = [this.body.position.x, this.body.position.y]
-        const steering = this.cohere(herd);
-        steering.mult(1.0);
-        this.applyForce(steering);
-        this.update();
+        const attraction = this.cohere(herd);
+        attraction.mult(0.02);
+        this.body.force.x+=attraction.x;
+        this.body.force.y+=attraction.y;
+
+        //this.update();
         this.draw();
 
     }
@@ -31,11 +32,13 @@ class Sheep {
         this.acceleration.add(force);
     }
     cohere = (herd) => {
-        let neighborDistance = 100;
+        let neighborDistance = 300;
         let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
         let count = 0;
+        const position = createVector(this.body.position.x,this.body.position.y);
         for (let i = 0; i < herd.length; i++) {
-            let d = p5.Vector.dist(this.position, herd[i].position);
+            const otherPosition = createVector(herd[i].body.position.x,herd[i].body.position.y)
+            let d = p5.Vector.dist(position, otherPosition);
             if (d > 0 && d < neighborDistance) {
                 sum.add(herd[i].position); // Add location
                 count++;
@@ -54,25 +57,12 @@ class Sheep {
         let desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
         // Normalize desired and scale to maximum speed
         desired.normalize();
-        desired.mult(this.maxspeed);
+        desired.mult(0.001);;
+        return desired;
         // Steering = Desired minus Velocity
-        let steer = p5.Vector.sub(desired, this.velocity);
-        steer.limit(this.maxforce); // Limit to maximum steering force
-        return steer;
+        
     }
 
-    update = () => {
-        this.velocity.add(this.acceleration);
-        this.velocity.limit(this.maxspeed);
-        this.position.add(this.velocity);
-        //reset acceleration
-        this.acceleration.mult(0);
-        //update physics body
-        this.body.position = {
-            x: this.position.x,
-            y: this.position.y
-        }
-    }
     draw = () => {
         const position = this.body.position;
         const angle = this.body.angle;
