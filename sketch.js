@@ -1,3 +1,6 @@
+Matter.use(
+  'matter-attractors' // PLUGIN_NAME
+);
 //p5 canvas setup
 let cnv;
 let root;
@@ -55,7 +58,7 @@ function draw() {
   background(220);
   
   for (let sheep of herd) {
-    sheep.draw();
+    sheep.run(herd);
   }
   ;
 }
