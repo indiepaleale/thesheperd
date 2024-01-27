@@ -51,9 +51,6 @@ class Crook{
         Composite.add(world, [this.body]);
     }
     updatePosition(playerX, playerY){
-        // let x = playerX + 100 * cos(mouseY);
-        // let y = playerY + 100 * sin(mouseY);
-
         let theta = atan2(mouseY - playerY, mouseX - playerX);
         let radius = 60;
         let x = playerX + radius * cos(theta);
