@@ -31,40 +31,41 @@ class Shepherd{
     };
     draw = () => {
         push();
+        line(this.position.x,this.position.y, this.tool.position.x, this.tool.position.y);
         translate(this.position.x, this.position.y);
         stroke(2);
-        rect(0, 0, this.size);
-        line(0, 0, 20, 0)
+        rect(0, 0, this.size/2, this.size);
         pop();
         this.tool.draw();
     }
 }
 
 class Crook{
-    constructor(x, y, world){
+    constructor(x, y,  world){
         this.size = 50;
         const options = {
-            friction: 0,
+            friction: 10,
         };
         this.body = Bodies.rectangle(x, y, this.size, this.size/2, options);
         Composite.add(world, [this.body]);
     }
     updatePosition(playerX, playerY){
-        let theta = atan2(mouseY - playerY, mouseX - playerX);
+        this.theta = atan2(mouseY - playerY, mouseX - playerX);
         let radius = 60;
-        let x = playerX + radius * cos(theta);
-        let y = playerY + radius * sin(theta);
+        let x = playerX + radius * cos(this.theta);
+        let y = playerY + radius * sin(this.theta);
         this.position = {x: x, y: y};
+        Matter.Body.setPosition(this.body, this.position, true);// this.position;
+        Matter.Body.setAngle(this.body, this.theta); 
+        Matter.Body.setSpeed(this.body, this.body.speed/2)
     }
     draw = () => {
         const angle = this.body.angle;
-        this.body.position = this.position;
         push();
         translate(this.position.x, this.position.y);
         rotate(angle);
         stroke(2);
         rect(0, 0, this.size, this.size/2);
-        line(0, 0, 20, 0)
         pop();
     }
 }

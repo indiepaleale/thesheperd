@@ -25,6 +25,8 @@ let mConstraint;
 
 
 function setup() {
+  rectMode(CENTER);
+
   //create canvas
   root = createDiv();
   root.id('root');
