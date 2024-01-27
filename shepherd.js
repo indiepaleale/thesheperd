@@ -59,7 +59,6 @@ class Crook{
     this.position = {x: x, y: y};
     }
     draw = () => {
-        const position = this.position;
         const angle = this.body.angle;
         this.body.position = {x: position.x, y: position.y};
         push();
