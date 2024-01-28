@@ -5,7 +5,8 @@ class Sheep {
             friction: 1,
         };
 
-        this.r = 20; // collision body radius
+        this.r = 12; // collision body radius
+        this.size = 40; // sprite size w&h
         this.body = Bodies.circle(x, y, this.r, options);
         Composite.add(world, [this.body]);
         //autonomous
@@ -62,9 +63,9 @@ class Sheep {
         const angle = heading.heading() + TWO_PI;
 
         push();
-        translate(position.x - this.r, position.y - this.r);
-        const img = sheepSprite.getImg(angle,2*this.r)
-        image(img,0,0)        
+        translate(position.x - this.size/2, position.y - this.size/2);
+        const img = sheepSprite.getImg(angle,this.size)
+        image(img,0,0);
         pop();
     }
 }
