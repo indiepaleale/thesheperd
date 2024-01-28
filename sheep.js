@@ -17,9 +17,9 @@ class Sheep {
     run = (herd) => {
         const attraction = this.cohere(herd);
         attraction.mult(0.02);
-        Matter.Body.applyForce(this.body,this.body.position,{
-            x:attraction.x,
-            y:attraction.y,
+        Matter.Body.applyForce(this.body, this.body.position, {
+            x: attraction.x,
+            y: attraction.y,
         })
         this.draw();
 
@@ -29,9 +29,9 @@ class Sheep {
         let neighborDistance = 300;
         let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
         let count = 0;
-        const position = createVector(this.body.position.x,this.body.position.y);
+        const position = createVector(this.body.position.x, this.body.position.y);
         for (let i = 0; i < herd.length; i++) {
-            const otherPosition = createVector(herd[i].body.position.x,herd[i].body.position.y)
+            const otherPosition = createVector(herd[i].body.position.x, herd[i].body.position.y)
             let d = p5.Vector.dist(position, otherPosition);
             if (d > 0 && d < neighborDistance) {
                 sum.add(herd[i].position); // Add location
@@ -52,18 +52,19 @@ class Sheep {
         // Normalize desired and scale to maximum speed
         desired.normalize();
         desired.mult(0.001);;
-        return desired;        
+        return desired;
     }
 
     draw = () => {
         const position = this.body.position;
-        const angle = this.body.angle;
+        const velocity = Matter.Body.getVelocity(this.body);
+        const heading = createVector(velocity.x,velocity.y)
+        const angle = heading.heading() + TWO_PI;
+
         push();
-        translate(position.x, position.y)
-        rotate(angle);
-        stroke(2);
-        ellipse(0, 0, 40);
-        line(0, 0, 20, 0)
+        translate(position.x - this.r, position.y - this.r);
+        const img = sheepSprite.getImg(angle,2*this.r)
+        image(img,0,0)        
         pop();
     }
 }

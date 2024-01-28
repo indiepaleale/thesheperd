@@ -15,6 +15,10 @@ const {
 
 let herd = [];
 
+let sheepSprite;
+let sheepData;
+let sheepSheet;
+
 
 const engine = Engine.create();
 engine.gravity.scale = 0;
@@ -22,7 +26,10 @@ const world = engine.world;
 
 let mConstraint;
 
-
+function preload() {
+  sheepData = loadJSON('assets/sheep_sprite.json');
+  sheepSheet = loadImage('assets/sheep_sprite_sheet.png');
+}
 
 function setup() {
   //create canvas
@@ -33,6 +40,11 @@ function setup() {
   root.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   //CENTER mode is used with matter-js
   rectMode(CENTER)
+  
+  //load sprite
+  sheepSprite = new Sprite(sheepSheet,sheepData);
+
+  //character
   player = new Shepherd(width/2, height/2, world);
   for (let i = 0; i < 100; i++) {
     const sheep = new Sheep(random(0, width), random(0, height), world);
@@ -52,6 +64,8 @@ function setup() {
 
     //add boundary
     const boundaries = new Boundary(width,height);
+
+
 }
 
 function draw() {
@@ -64,4 +78,7 @@ function draw() {
   player.update();
   player.draw();
  
+ 
 }
+
+
