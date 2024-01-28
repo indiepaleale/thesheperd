@@ -51,7 +51,7 @@ class Sheep {
         let desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
         // Normalize desired and scale to maximum speed
         desired.normalize();
-        desired.mult(0.001);;
+        desired.mult(0.01);;
         return desired;        
     }
 

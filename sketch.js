@@ -14,7 +14,7 @@ const {
 } = Matter;
 
 let herd = [];
-
+let backgroundGrass;
 
 const engine = Engine.create();
 engine.gravity.scale = 0;
@@ -22,11 +22,12 @@ const world = engine.world;
 
 let mConstraint;
 
-
+function preload(){
+  backgroundGrass = loadImage("grass.png");
+}
 
 function setup() {
   rectMode(CENTER);
-
   //create canvas
   root = createDiv();
   root.id('root');
@@ -47,7 +48,8 @@ function setup() {
           stiffness: 1
       }
     }
-
+    console.log()
+    pixelDensity(4);
     canvasMouse.pixelRatio = pixelDensity();
     mConstraint = MouseConstraint.create(engine, options);
     World.add(world, mConstraint)
@@ -55,12 +57,10 @@ function setup() {
 
 function draw() {
   Engine.update(engine);
-  background(220);
-  
+  image(backgroundGrass, 0, 0, 800, 600)
   for (let sheep of herd) {
     sheep.run(herd);
   };
   player.update();
   player.draw();
- 
 }
