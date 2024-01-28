@@ -154,7 +154,4 @@ function explode() { // Attacks the background
   World.add(world, bomb);
   // console.log('BOOM');
   exploded = true;
-=======
-  
-
 }
