@@ -13,11 +13,9 @@ class Sprite {
     getImg = (angle,size) => {
         angle += 1.178097225;
         let index = angle/QUARTER_PI;
-        index = floor(index%8)
+        index = floor((index+1)%8)
         let img = this.frames[index];
-        img.resize(size,size);
+        img.resize(size, size);
         return img;
     }
-
-
 }

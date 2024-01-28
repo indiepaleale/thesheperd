@@ -9,7 +9,7 @@ function initializeCanvas(){
   cnv = createCanvas(800, 600);
   cnv.parent(root);
   root.position((windowWidth - width) / 2, (windowHeight - height) / 2);
-  pixelDensity(4);
+  pixelDensity(1);
 }
 
 //matter-js engine setup
@@ -46,10 +46,11 @@ let sheepSprite;
 let sheepData;
 let sheepSheet;
 let backgroundGrass;
+let shepherdCrystal;
 
 function initializeSprites(){
   sheepSprite = new Sprite(sheepSheet,sheepData);
-  // shepherdSprite = new Sprite(shepherdSheet, shepherdData);
+  shepherdSprite = new Sprite(shepherdSheet, shepherdData);
 }
 
 function initilaizeGameWorld(){
@@ -87,8 +88,9 @@ function mouseReleased(){
 function preload() {
   sheepData = loadJSON('assets/sheep_sprite.json');
   sheepSheet = loadImage('assets/sheep_sprite_sheet.png');
-  //shepherdData = loadJSON('assets/shepherd_sprite.json');
-  //shepherdSheet = loadImage('assets/shepherd_sprite_sheet.png');
+  shepherdCrystal = loadImage('assets/shepherd_sprite/crystal.png');
+  shepherdData = loadJSON('assets/shepherd_sprite/shepherd_sprite.json');
+  shepherdSheet = loadImage('assets/shepherd_sprite/shepherd_sprite_sheet.png');
   backgroundGrass = loadImage("grass.png");
 }
 
