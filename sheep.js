@@ -12,6 +12,7 @@ class Sheep {
         //autonomous
         this.position = createVector(this.body.position.x, this.body.position.y);
         this.headingAngle = PI;
+        this.rotationAngle = 0;
     }
 
 
@@ -54,7 +55,7 @@ class Sheep {
         return desired;
     }
 
-    draw = (attraction) => {
+    draw = () => {
         const position = this.body.position;
         //caculate heading
         const velocity = Matter.Body.getVelocity(this.body);
@@ -65,6 +66,7 @@ class Sheep {
 
         push();
         translate(position.x - this.size / 2, position.y - this.size / 2);
+        rotate(this.rotationAngle);
         const img = sheepSprite.getImg(this.headingAngle, this.size)
         image(img, 0, 0);
         pop();
@@ -77,6 +79,11 @@ class Sheep {
        World.add(world, bomb);
        // console.log('BOOM');
        exploded = true;
+    }
+
+    inBlackHole = ()=>{
+        this.rotationAngle += PI/10;
+
     }
 
     clicked(i) { 

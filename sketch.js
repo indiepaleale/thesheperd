@@ -1,7 +1,6 @@
 //p5 canvas setup
 let cnv;
 let root;
-let player;
 
 function initializeCanvas(){
   root = createDiv();
@@ -9,6 +8,7 @@ function initializeCanvas(){
   cnv = createCanvas(800, 600);
   cnv.parent(root);
   root.position((windowWidth - width) / 2, (windowHeight - height) / 2);
+  pixelDensity(1);
   pixelDensity(1);
 }
 
@@ -24,10 +24,10 @@ const {
 } = Matter;
 let mConstraint;
 const engine = Engine.create();
-engine.gravity.scale = 0;
 const world = engine.world;
 
 function initializeMatterjs(){
+  engine.gravity.scale = 0;
   let canvasMouse = Mouse.create(cnv.elt);
     let options = {
         mouse: canvasMouse,
@@ -41,11 +41,16 @@ function initializeMatterjs(){
 }
 
 // Game data setup
+let player;
 let herd = [];
 let sheepSprite;
 let sheepData;
 let sheepSheet;
-let backgroundGrass;
+let backgroundImg;
+let blackhole;
+let blackholeSprite;
+let blackholeSheet;
+let blackholeData;
 let explosion;
 let bomb;
 let exploded = false;
@@ -54,15 +59,18 @@ let shepherdCrystal;
 function initializeSprites(){
   sheepSprite = new Sprite(sheepSheet,sheepData);
   shepherdSprite = new Sprite(shepherdSheet, shepherdData);
+  blackholeSprite = new Sprite(blackholeSheet,blackholeData);
 }
 
 function initilaizeGameWorld(){
   //character
   player = new Shepherd(width/2, height/2, world);
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 20; i++) {
     const sheep = new Sheep(random(0, width), random(0, height), world);
     herd.push(sheep);
   }
+  //add black hole
+  blackhole = new Blackhole(random(50,400),random(50,300),100,blackholeSprite);
   //add world boundary
   const boundaries = new Boundary(width,height);
 }
@@ -94,7 +102,10 @@ function preload() {
   shepherdCrystal = loadImage('assets/shepherd_sprite/moon.png');
   shepherdData = loadJSON('assets/shepherd_sprite/shepherd_sprite.json');
   shepherdSheet = loadImage('assets/shepherd_sprite/shepherd_sprite_sheet.png');
-  backgroundGrass = loadImage("grass.png");
+  backgroundImg = loadImage("assets/space-2.png");
+
+  blackholeSheet = loadImage('assets/blackhole_sprite_sheet.png');
+  blackholeData = loadJSON('assets/black_hole_sprite.json')
   explosion = loadImage('assets/explosion.gif');
 }
 
@@ -104,11 +115,14 @@ function setup() {
   initializeMatterjs();
   initilaizeGameWorld();
   rectMode(CENTER); // this is to match up with matter.js
+  frameRate(30);
 }
 
 function draw() {
-  image(backgroundGrass, 0, 0, 800, 600);
+  image(backgroundImg, 0, 0, 800, 600)
   Engine.update(engine);
+  blackhole.show();
+  blackhole.inBound(herd);
   for (let sheep of herd) {
     sheep.run(herd);
   }
@@ -126,4 +140,5 @@ function draw() {
 
   player.update();
   player.draw();
+  
 }
