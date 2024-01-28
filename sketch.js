@@ -140,5 +140,21 @@ function draw() {
 
   player.update();
   player.draw();
+
+}
+
+function mouseClicked() {
+  explode();
+}
+
+function explode() { // Attacks the background
+  let scale = 0.3;
+  // Create an unseen Matter body as a form of circle)
+  bomb = Matter.Bodies.circle(mouseX, mouseY, scale * explosion.width, scale * explosion.height);
+  World.add(world, bomb);
+  // console.log('BOOM');
+  exploded = true;
+=======
   
+
 }
