@@ -55,12 +55,32 @@ function initializeSprites(){
 function initilaizeGameWorld(){
   //character
   player = new Shepherd(width/2, height/2, world);
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 120; i++) {
     const sheep = new Sheep(random(0, width), random(0, height), world);
     herd.push(sheep);
   }
   //add world boundary
   const boundaries = new Boundary(width,height);
+}
+
+// Mouse stuff
+let startTime;
+let isLongPress = false;
+
+function mousePressed(event){ 
+  startTime = frameCount;
+  isLongPress = false;
+  return false;
+}
+
+function mouseReleased(){
+  let duration = frameCount - startTime;
+  if (duration <= 7){
+    for (let i = 0; i < herd.length; i++){
+      herd[i].clicked(i);
+    }
+  }
+  return false;
 }
 
 // P5 MAIN FUNCTIONS

@@ -71,4 +71,17 @@ class Sheep {
         image(img, 0, 0);
         pop();
     }
+
+    explode(){
+    }
+
+    clicked(i) { 
+        let d;
+        let mouse = createVector(mouseX, mouseY);
+        let sheep = createVector(this.body.position.x, this.body.position.y);
+        if (mouse.dist(sheep) <= this.size/4){
+            console.log("I am sheep " + i);
+            this.explode();
+        }
+    }
 }
