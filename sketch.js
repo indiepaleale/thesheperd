@@ -91,7 +91,7 @@ function mouseReleased(){
 function preload() {
   sheepData = loadJSON('assets/sheep_sprite.json');
   sheepSheet = loadImage('assets/sheep_sprite_sheet.png');
-  shepherdCrystal = loadImage('assets/shepherd_sprite/crystal.png');
+  shepherdCrystal = loadImage('assets/shepherd_sprite/moon.png');
   shepherdData = loadJSON('assets/shepherd_sprite/shepherd_sprite.json');
   shepherdSheet = loadImage('assets/shepherd_sprite/shepherd_sprite_sheet.png');
   backgroundGrass = loadImage("grass.png");

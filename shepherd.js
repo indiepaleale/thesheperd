@@ -58,7 +58,7 @@ class Crook{
         const options = {
             friction: 10,
         };
-        this.body = Bodies.rectangle(x, y, this.size, this.size/2, options);
+        this.body = Bodies.circle(x, y, this.size*2/4, options);
         Composite.add(world, [this.body]);
         this.angle = atan2(mouseY - x, mouseX - y);
         this.image = shepherdCrystal;
