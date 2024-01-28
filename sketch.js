@@ -46,6 +46,9 @@ let sheepSprite;
 let sheepData;
 let sheepSheet;
 let backgroundGrass;
+let explosion;
+let bomb;
+let exploded = false;
 let shepherdCrystal;
 
 function initializeSprites(){
@@ -92,6 +95,7 @@ function preload() {
   shepherdData = loadJSON('assets/shepherd_sprite/shepherd_sprite.json');
   shepherdSheet = loadImage('assets/shepherd_sprite/shepherd_sprite_sheet.png');
   backgroundGrass = loadImage("grass.png");
+  explosion = loadImage('assets/explosion.gif');
 }
 
 function setup() {
@@ -103,11 +107,23 @@ function setup() {
 }
 
 function draw() {
-  image(backgroundGrass, 0, 0, 800, 600)
+  image(backgroundGrass, 0, 0, 800, 600);
   Engine.update(engine);
   for (let sheep of herd) {
     sheep.run(herd);
-  };
+  }
+
+  if (exploded) {
+    // console.log('exploded.');
+    push();
+    imageMode(CENTER);
+    image(explosion, mouseX, mouseY, 0.3 * explosion.width, 0.3 * explosion.height);
+    setTimeout(exploded = false, World.remove(world, bomb), 3000);
+    pop();
+  }
+  
+  // setTimeout(exploded = false, 3000);
+
   player.update();
   player.draw();
 }
