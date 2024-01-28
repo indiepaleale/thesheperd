@@ -75,6 +75,7 @@ function preload() {
 function setup() {
   initializeCanvas();
   initializeSprites();
+  initializeMatterjs();
   initilaizeGameWorld();
   rectMode(CENTER); // this is to match up with matter.js
 }
