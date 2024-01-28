@@ -10,24 +10,25 @@ class Sheep {
         this.body = Bodies.circle(x, y, this.r, options);
         Composite.add(world, [this.body]);
         //autonomous
-        this.position = createVector(this.body.position.x, this.body.position.y)
-
+        this.position = createVector(this.body.position.x, this.body.position.y);
+        this.headingAngle = PI;
     }
 
 
     run = (herd) => {
-        const attraction = this.cohere(herd);
-        attraction.mult(0.02);
+        let attraction = this.cohere(herd);
+        attraction.setMag(0.00002);
         Matter.Body.applyForce(this.body, this.body.position, {
             x: attraction.x,
             y: attraction.y,
         })
         this.draw();
+        
 
     }
 
     cohere = (herd) => {
-        let neighborDistance = 300;
+        let neighborDistance = 100;
         let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
         let count = 0;
         const position = createVector(this.body.position.x, this.body.position.y);
@@ -49,23 +50,25 @@ class Sheep {
     }
 
     seek = (target) => {
-        let desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
+        const position = createVector(this.body.position.x, this.body.position.y);
+        let desired = p5.Vector.sub(target, position); // A vector pointing from the location to the target
         // Normalize desired and scale to maximum speed
-        desired.normalize();
-        desired.mult(0.001);;
         return desired;
     }
 
-    draw = () => {
+    draw = (attraction) => {
         const position = this.body.position;
+        //caculate heading
         const velocity = Matter.Body.getVelocity(this.body);
-        const heading = createVector(velocity.x,velocity.y)
-        const angle = heading.heading() + TWO_PI;
+        const heading = createVector(velocity.x, velocity.y);
+        if (heading.mag() > 0.1) {
+            this.headingAngle = heading.heading() + TWO_PI;
+        }
 
         push();
-        translate(position.x - this.size/2, position.y - this.size/2);
-        const img = sheepSprite.getImg(angle,this.size)
-        image(img,0,0);
+        translate(position.x - this.size / 2, position.y - this.size / 2);
+        const img = sheepSprite.getImg(this.headingAngle, this.size)
+        image(img, 0, 0);
         pop();
     }
 }
