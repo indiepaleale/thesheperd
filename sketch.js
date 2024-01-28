@@ -91,6 +91,7 @@ function mouseReleased(){
     for (let i = 0; i < herd.length; i++){
       herd[i].clicked(i);
     }
+    explode();
   }
   return false;
 }
@@ -141,10 +142,6 @@ function draw() {
   player.update();
   player.draw();
 
-}
-
-function mouseClicked() {
-  explode();
 }
 
 function explode() { // Attacks the background
