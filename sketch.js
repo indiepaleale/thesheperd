@@ -65,7 +65,7 @@ function initializeSprites(){
 function initilaizeGameWorld(){
   //character
   player = new Shepherd(width/2, height/2, world);
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 120; i++) {
     const sheep = new Sheep(random(0, width), random(0, height), world);
     herd.push(sheep);
   }
