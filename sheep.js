@@ -23,8 +23,6 @@ class Sheep {
             y: attraction.y,
         })
         this.draw();
-        
-
     }
 
     cohere = (herd) => {
@@ -72,7 +70,13 @@ class Sheep {
         pop();
     }
 
-    explode(){
+    explode() { // If the sheep is clicked...
+       let scale = 0.3;
+       // Create an unseen Matter body as a form of circle)
+       bomb = Matter.Bodies.circle(mouseX, mouseY, scale * explosion.width, scale * explosion.height);
+       World.add(world, bomb);
+       // console.log('BOOM');
+       exploded = true;
     }
 
     clicked(i) { 
@@ -80,8 +84,8 @@ class Sheep {
         let mouse = createVector(mouseX, mouseY);
         let sheep = createVector(this.body.position.x, this.body.position.y);
         if (mouse.dist(sheep) <= this.size/4){
-            console.log("I am sheep " + i);
-            this.explode();
+            // console.log("I am sheep " + i);
+            this.explode(); // Call the explosion mechanism
         }
     }
 }
